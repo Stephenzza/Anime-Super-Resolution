@@ -21,19 +21,19 @@ class AdamWithWeightsNormalization(Adam):
             pass
         t = K.cast(self.iterations + 1, K.floatx())
         lr_t = lr * K.sqrt(1. - K.pow(self.beta_2, t)) / (1. - K.pow(self.beta_1, t))
-        shapes = [K.get_variable_shape(p) for p in params]
+        shapes = [K.int_shape(p) for p in params]
         ms = [K.zeros(shape) for shape in shapes]
         vs = [K.zeros(shape) for shape in shapes]
         self.weights = [self.iterations] + ms + vs
         for p, g, m, v in zip(params, grads, ms, vs):
             # if a weight tensor (len > 1) use weight normalized parameterization
             # this is the only part changed w.r.t. keras.optimizers.Adam
-            ps = K.get_variable_shape(p)
+            ps = K.int_shape(p)
             if len(ps)>1:
                 # get weight normalization parameters
                 V, V_norm, V_scaler, g_param, grad_g, grad_V = get_weightnorm_params_and_grads(p, g)
                 # Adam containers for the 'g' parameter
-                V_scaler_shape = K.get_variable_shape(V_scaler)
+                V_scaler_shape = K.int_shape(V_scaler)
                 m_g = K.zeros(V_scaler_shape)
                 v_g = K.zeros(V_scaler_shape)
                 # update g parameters
@@ -75,7 +75,7 @@ class AdamWithWeightsNormalization(Adam):
     
     
 def get_weightnorm_params_and_grads(p, g):
-    ps = K.get_variable_shape(p)
+    ps = K.int_shape(p)
     # construct weight scaler: V_scaler = g/||V||
     V_scaler_shape = (ps[-1],)  # assumes we're using tensorflow!
     V_scaler = K.ones(V_scaler_shape)  # init to ones, so effective parameters don't change
@@ -92,7 +92,7 @@ def get_weightnorm_params_and_grads(p, g):
     return V, V_norm, V_scaler, g_param, grad_g, grad_V
 
 def add_weightnorm_param_updates(updates, new_V_param, new_g_param, W, V_scaler):
-    ps = K.get_variable_shape(new_V_param)
+    ps = K.int_shape(new_V_param)
     norm_axes = [i for i in range(len(ps) - 1)]
     # update W and V_scaler
     new_V_norm = tf.sqrt(tf.reduce_sum(tf.square(new_V_param), norm_axes))
