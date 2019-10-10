@@ -133,7 +133,7 @@ class DataLoader(object):
         hr =  np.asarray(hr)
         return lr, hr
     
-    def batches(self, setpath="datasets/train", batch_size=16, complete_batch_only=False):
+    def batches(self, setpath="/content/Anime-Super-Resolution/datasets/train", batch_size=16, complete_batch_only=False):
         images = self.search(setpath)
         sizes = []
         for image in images:
