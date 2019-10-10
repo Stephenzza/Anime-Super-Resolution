@@ -19,7 +19,7 @@ from model import wdsr_a, wdsr_b
 from utils import DataLoader
 
 model = wdsr_b(scale=4, num_res_blocks=32)
-model.load_weights('./weights/wdsr-b-32-x4.h5')
+model.load_weights('/content/Anime-Super-Resolution/weights/wdsr-b-32-x4.h5')
 
 data_loader = DataLoader(scale=4)
 
@@ -51,7 +51,7 @@ def copy(fp, sp):
     lr.save(sp)
     pass
 
-def predict_testset(setpath='datasets/test'):
+def predict_testset(setpath='/content/Anime-Super-Resolution/datasets/test'):
     files = data_loader.search(setpath)
     for index, file in enumerate(files):
         copy(fp=file, sp='outputs/lr_' + str(index+1) + '.jpg')
