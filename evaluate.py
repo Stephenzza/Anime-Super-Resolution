@@ -19,11 +19,11 @@ from model import wdsr_a, wdsr_b
 from utils import DataLoader
 
 model = wdsr_b(scale=4, num_res_blocks=32)
-model.load_weights('./weights/wdsr-b-32-x4.h5')
+model.load_weights('/content/Anime-Super-Resolution/weights/wdsr-b-32-x4.h5')
 
 data_loader = DataLoader(scale=4)
 
-def evaluate_test(model, setpath='datasets/train', difficulty='easy', name='evaluate'):
+def evaluate_test(model, setpath='/content/Anime-Super-Resolution/datasets/train', difficulty='easy', name='evaluate'):
     images = data_loader.search(setpath)
     image = random.choice(images)
     hr = data_loader.imread(image)
@@ -59,9 +59,9 @@ def evaluate_test(model, setpath='datasets/train', difficulty='easy', name='eval
     sr = sr.astype('uint8')
     lr = Image.fromarray(lr)
     sr = Image.fromarray(sr)
-    lr_resize.save("images/" + name + "_lr.jpg")
-    sr.save("images/" + name + "_sr.jpg")
-    hr.save("images/" + name + "_hr.jpg")
+    lr_resize.save("/content/drive/My Drive/anime_output/images/" + name + "_lr.jpg")
+    sr.save("/content/drive/My Drive/anime_output/images/" + name + "_sr.jpg")
+    hr.save("/content/drive/My Drive/anime_output/images/" + name + "_hr.jpg")
     pass
 
 evaluate_test(model, difficulty='easy', name='easy')
