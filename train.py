@@ -89,5 +89,5 @@ class SuperResolution(object):
     pass
 
 
-sr = SuperResolution(pretrained_weights='./weights/wdsr-b-32-x4.h5')
+sr = SuperResolution(pretrained_weights='/content/Anime-Super-Resolution/weights/wdsr-b-32-x4.h5')
 sr.train()
