@@ -54,8 +54,8 @@ def copy(fp, sp):
 def predict_testset(setpath='/content/Anime-Super-Resolution/datasets/test'):
     files = data_loader.search(setpath)
     for index, file in enumerate(files):
-        copy(fp=file, sp='outputs/lr_' + str(index+1) + '.jpg')
-        predict(model, fp=file, sp='outputs/sr_' + str(index+1) + '.jpg')
+        copy(fp=file, sp='/content/drive/My Drive/anime_output/lr_' + str(index+1) + '.jpg')
+        predict(model, fp=file, sp='/content/drive/My Drive/anime_output/sr_' + str(index+1) + '.jpg')
         pass
     pass
 
