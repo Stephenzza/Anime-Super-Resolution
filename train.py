@@ -32,7 +32,7 @@ class SuperResolution(object):
             pass
         self.data_loader = DataLoader(scale=scale, crop_size=256)
         self.pretrained_weights = pretrained_weights
-        self.default_weights_save_path = 'weights/wdsr-b-' + \
+        self.default_weights_save_path = '/content/Anime-Super-Resolution/weights/wdsr-b-' + \
         str(self.num_res_blocks) + '-x' + str(self.scale) + '.h5'
         self.name = name
         pass
@@ -69,7 +69,7 @@ class SuperResolution(object):
             pass
         pass
     
-    def sample(self, setpath='datasets/train', save_folder='samples', epoch=1, batch=1):
+    def sample(self, setpath='/content/Anime-Super-Resolution/datasets/train', save_folder='/content/drive/My Drive/anime_output', epoch=1, batch=1):
         images = self.data_loader.search(setpath)
         image = random.choice(images)
         hr = self.data_loader.imread(image)
